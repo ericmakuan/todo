@@ -2,14 +2,24 @@ package com.example.demo.todo;
 
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
 @Api
+@Controller
 @RestController
 @RequestMapping(path = "api/v1/todo")
 public class TodoController {
+    @GetMapping("hello")
+    public String hello(Model model) {
+        model.addAttribute("hello", "Hello World!!!");
+        return "hello";
+    }
+
     private final TodoService todoService;
 
     @Autowired
@@ -22,6 +32,8 @@ public class TodoController {
     public List<Todo> getTodos () {
         return todoService.getTodos();
     }
+
+
 
     @GetMapping(path = "{todoId}")
     public List<Todo> getTodo (@PathVariable("todoId") Long todoId) {
