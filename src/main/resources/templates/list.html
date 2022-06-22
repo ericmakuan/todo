@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{/style.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Todo List</title>
+</head>
+<body>
+
+<div class="container">
+  <h2>To Do List</h2>
+  <ul th:each="todo: ${todolist}">
+    <li><span th:text="${todo.name}"></span> <span th:text="'  priority:' + ${todo.priority}"> </span><span class="close">x</span></li>
+  </ul>
+</div>
+</body>
+</html>
