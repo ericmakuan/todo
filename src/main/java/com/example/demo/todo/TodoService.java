@@ -27,12 +27,13 @@ public class TodoService {
         return todoRepository.findAllById(Collections.singleton(todoId));
     }
 
-    public void addNewTodo(Todo todo) {
+    public List<Todo> addNewTodo(Todo todo) {
         Optional<Todo> todoOptional = todoRepository.findTodoBYName(todo.getName());
         if (todoOptional.isPresent()) {
             throw new IllegalStateException("name taken");
         }
         todoRepository.save(todo);
+        return getTodos();
     }
 
     public void deleteTodo(Long todoId) {

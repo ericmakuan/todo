@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class Controller1 {
+public class ViewController {
     @GetMapping("index")
     public String getindex(Model model) {
         model.addAttribute("name","eric");
@@ -26,6 +26,15 @@ public class Controller1 {
         model.addAttribute("todolist", todoList);
         Todo todo = new Todo();
         model.addAttribute("todoObject", todo);
+        return "list";
+    }
+
+    @PostMapping("/todos")
+    public String createTodo(@ModelAttribute Todo todo, Model model) {
+        Iterable<Todo> allTodoList = todoService.addNewTodo(todo);
+        Todo emptyTodo = new Todo();
+        model.addAttribute("todolist", allTodoList);
+        model.addAttribute("todoObject", emptyTodo);
         return "list";
     }
 
