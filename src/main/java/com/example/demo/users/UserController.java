@@ -1,8 +1,6 @@
-package com.example.demo.userList;
+package com.example.demo.users;
 
 
-import com.example.demo.userList.UserList;
-import com.example.demo.userList.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +9,7 @@ import java.util.List;
 
 @Api
 @RestController
-@RequestMapping(path = "api/v1/userlist")
+@RequestMapping(path = "api/v1/user")
 public class UserController {
     private final UserService userService;
 
@@ -22,19 +20,19 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserList> getUsers () {
+    public List<Users> getUsers () {
         return userService.getUsers();
     }
 
     @GetMapping(path = "{userId}")
-    public List<UserList> getUser (@PathVariable("userId") Long userId) {
+    public List<Users> getUser (@PathVariable("userId") Long userId) {
         return userService.getUser(userId);
     }
 
     @PostMapping
-    public void generateNewUser(@RequestBody UserList userList) {
+    public void generateNewUser(@RequestBody Users users) {
 
-        userService.addNewUser(userList);
+        userService.addNewUser(users);
     }
 
     @DeleteMapping(path = "{userId}")

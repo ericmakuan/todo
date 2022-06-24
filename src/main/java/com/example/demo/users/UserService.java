@@ -1,4 +1,4 @@
-package com.example.demo.userList;
+package com.example.demo.users;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +19,20 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<UserList> getUsers () {
+    public List<Users> getUsers () {
         return userRepository.findAll();
     }
 
-    public List<UserList> getUser (Long userId) {
+    public List<Users> getUser (Long userId) {
         return userRepository.findAllById(Collections.singleton(userId));
     }
 
-    public void addNewUser(UserList user) {
-        Optional<UserList> userOptional = userRepository.findUserListBYEmail(user.getEmail());
+    public void addNewUser(Users users) {
+        Optional<Users> userOptional = userRepository.findUserBYEmail(users.getEmail());
         if (userOptional.isPresent()) {
             throw new IllegalStateException("email taken");
         }
-        userRepository.save(user);
+        userRepository.save(users);
     }
 
     public void deleteUser(Long userId) {
@@ -46,18 +46,18 @@ public class UserService {
 
     @Transactional
     public void updateUser(Long userId, String name, String email) {
-        UserList user = userRepository.findById(userId)
+        Users users = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("User with id " + userId + "does not exists")
                 );
-        if (name != null && name.length() > 0 && !Objects.equals(user.getName(), name)) {
-            user.setName(name);
+        if (name != null && name.length() > 0 && !Objects.equals(users.getName(), name)) {
+            users.setName(name);
         }
-        if (email != null && email.length() > 0 && !Objects.equals(user.getEmail(), email)) {
-            Optional<UserList> userOptional = userRepository.findUserListBYEmail(email);
+        if (email != null && email.length() > 0 && !Objects.equals(users.getEmail(), email)) {
+            Optional<Users> userOptional = userRepository.findUserBYEmail(email);
             if (userOptional.isPresent()) {
                 throw new IllegalStateException("email taken");
             }
-            user.setEmail(email);
+            users.setEmail(email);
         }
 
     }

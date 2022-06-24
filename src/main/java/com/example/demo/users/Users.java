@@ -1,11 +1,11 @@
-package com.example.demo.userList;
+package com.example.demo.users;
 
 import javax.persistence.*;
 
 
 @Entity
 @Table
-public class UserList {
+public class Users {
     @Id
     @SequenceGenerator(
             name = "user_sequence",
@@ -21,15 +21,15 @@ public class UserList {
     private String email;
     private Long todoId;
 
-    public UserList() {
+    public Users() {
     }
 
-    public UserList(String name, String email) {
+    public Users(String name, String email) {
         this.name = name;
         this.email = email;
     }
 
-    public UserList(Long id, String name, String email, Long todoId) {
+    public Users(Long id, String name, String email, Long todoId) {
         this.id = id;
         this.name = name;
         this.email = email;

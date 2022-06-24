@@ -12,10 +12,39 @@
     <input type="text" id="input" placeholder="Todo" th:field="*{name}">
     <input type="text" id="input" placeholder="Priorrity" th:field="*{priority}">
     <button type="submit" class="addBtn">Add</button>
-  </form><h2>To Do List</h2>
+  </form>
+  <h2>To Do List</h2>
   <ul th:each="todo: ${todolist}">
-    <li><span th:text="${todo.name}+','"></span> <span th:text="'  priority:' + ${todo.priority}"> </span><span class="close">x</span></li>
+    <li th:onclick="'javascript:updateTodo(event,this,' + ${todo.id} + ')'">
+      <span th:text="${todo.name}+','"></span> <span th:text="'  priority:' + ${todo.priority}"></span>
+      <span th:text="'  status:' + ${todo.done}"></span>
+      <span class="close" th:onclick="'javascript:deleteTodo(event,this,' + ${todo.id} + ')'">x</span>
+    </li>
   </ul>
 </div>
+<script>
+  const updateTodo = (event, element, id) => {
+    event.stopPropagation();
+    fetch('todos/'+ id, {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function(response) {
+    })
+    location.reload();
+  }
+  const deleteTodo = (event, element, id) => {
+    event.stopPropagation();
+    fetch('todos/'+ id, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function(response) {
+      element.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode);
+    })
+  }
+</script>
 </body>
 </html>

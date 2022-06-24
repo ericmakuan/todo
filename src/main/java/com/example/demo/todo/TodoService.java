@@ -32,28 +32,28 @@ public class TodoService {
         if (todoOptional.isPresent()) {
             throw new IllegalStateException("name taken");
         }
+        todo.setDone("undone");
         todoRepository.save(todo);
         return getTodos();
     }
 
-    public void deleteTodo(Long todoId) {
+    public List<Todo> deleteTodo(Long todoId) {
         boolean exists = todoRepository.existsById(todoId);
         if (!exists) {
             throw new IllegalStateException("todo with id " + todoId + "does not exists");
 
         }
         todoRepository.deleteById(todoId);
+        return getTodos();
     }
 
     @Transactional
-    public void updateTodo(Long todoId, String name, String done) {
+    public List<Todo> updateTodo(Long todoId, String done) {
         Todo todo = todoRepository.findById(todoId)
                 .orElseThrow(() -> new IllegalStateException("Todo with id " + todoId + "does not exists")
                 );
-        if (name != null && name.length() > 0 && !Objects.equals(todo.getName(), name)) {
-            todo.setName(name);
-        }
         todo.setDone(done);
+        return getTodos();
 
 
     }

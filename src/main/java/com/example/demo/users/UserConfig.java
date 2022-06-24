@@ -1,7 +1,5 @@
-package com.example.demo.userList;
+package com.example.demo.users;
 
-import com.example.demo.todo.Todo;
-import com.example.demo.todo.TodoRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +11,10 @@ public class UserConfig {
     @Bean
     CommandLineRunner commandLineRunnerU(UserRepository repository) {
         return args -> {
-            UserList ma = new UserList("Maria",
+            Users ma = new Users("Maria",
                     "ma@gm.com"
             );
-            UserList al = new UserList("Alex",
+            Users al = new Users("Alex",
                     "al@cm.com"
             );
 
