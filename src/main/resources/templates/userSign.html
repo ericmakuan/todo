@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{/style.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>sign up</title>
+</head>
+<body>
+<div class="container">
+  <h2>sign up</h2>
+  <form class="header" th:action="@{/users}" method="post" th:object="${usersObject}">
+    <input type="text" id="input" placeholder="name" th:field="*{name}">
+    <input type="text" id="input" placeholder="email" th:field="*{email}">
+    <button type="submit" class="addBtn">sign up</button>
+  </form>
+</div>
+</body>
+</html>

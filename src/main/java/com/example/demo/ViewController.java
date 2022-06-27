@@ -3,6 +3,8 @@ package com.example.demo;
 import com.example.demo.todo.Todo;
 import com.example.demo.todo.TodoRepository;
 import com.example.demo.todo.TodoService;
+import com.example.demo.users.UserService;
+import com.example.demo.users.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,9 @@ public class ViewController {
 
     @Autowired
     TodoService todoService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/todos")
     public String getTodos(Model model) {
@@ -58,6 +63,31 @@ public class ViewController {
         model.addAttribute("todolist", allTodoList);
         return "list";
     }
+    @GetMapping("/users")
+    public String usersPage(Model model) {
+        Iterable<Users> userList = userService.getUsers();
+        model.addAttribute("userlist", userList);
+        Users user = new Users();
+        model.addAttribute("usersObject", user);
+        return "userSign";
+    }
 
+    @PostMapping("/users")
+    public String createUsers(@ModelAttribute Users users, Model model) {
+        Iterable<Users> theUser = userService.addNewUser(users);
+        Users emptyUser = new Users();
+        model.addAttribute("userlist", theUser);
+        model.addAttribute("usersObject", emptyUser);
+        return "userPage";
+    }
 
+    @ResponseBody
+    @DeleteMapping("/users/{userId}")
+    public String deleteUser(@ModelAttribute Users user, Model model, @PathVariable("userId") Long userId) {
+        Iterable<Users> userList = userService.deleteUser(userId);
+        model.addAttribute("userlist", userList);
+        Users users = new Users();
+        model.addAttribute("usersObject", users);
+        return "redirect:/users";
+    }
 }
