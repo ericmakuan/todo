@@ -15,11 +15,6 @@ import java.util.Collections;
 @Controller
 public class ViewController {
     TodoRepository todoRepository;
-    @GetMapping("index")
-    public String getindex(Model model) {
-        model.addAttribute("name","eric");
-        return "list";
-    }
 
     @Autowired
     TodoService todoService;
@@ -37,7 +32,7 @@ public class ViewController {
     }
 
     @PostMapping("/todos")
-    public String createTodo(@ModelAttribute Todo todo, Model model) {
+    public String createTodo(@ModelAttribute Todo todo, Users user, Model model) {
         Iterable<Todo> allTodoList = todoService.addNewTodo(todo);
         Todo emptyTodo = new Todo();
         model.addAttribute("todolist", allTodoList);
@@ -74,11 +69,15 @@ public class ViewController {
 
     @PostMapping("/users")
     public String createUsers(@ModelAttribute Users users, Model model) {
+        Iterable<Todo> todoList = todoService.getTodos();
+        model.addAttribute("todolist", todoList);
+        Todo todo = new Todo();
+        model.addAttribute("todoObject", todo);
         Iterable<Users> theUser = userService.addNewUser(users);
         Users emptyUser = new Users();
         model.addAttribute("userlist", theUser);
         model.addAttribute("usersObject", emptyUser);
-        return "userPage";
+        return "list";
     }
 
     @ResponseBody
