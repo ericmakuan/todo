@@ -28,6 +28,8 @@ public class Todo {
     private String priority;
     private Long userId;
 
+    private String userName;
+
     public Todo() {
 
     }
@@ -41,13 +43,14 @@ public class Todo {
 //        this.userId = userId;
 //    }
 
-    public Todo(String name, Date deadLine, String priority, Long userId) {
+    public Todo(String name, Date deadLine, String priority, Long userId, String userName) {
 
         this.name = name;
         this.done = "undone";
         this.deadLine = deadLine;
         this.priority = priority;
         this.userId = userId;
+        this.userName = userName;
     }
 
 
@@ -55,6 +58,14 @@ public class Todo {
 //        this.name = name;
 //        this.done = done;
 //    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public Long getId() {
         return id;
@@ -113,6 +124,7 @@ public class Todo {
                 ", deadLine=" + deadLine +
                 ", priority='" + priority + '\'' +
                 ", userId=" + userId +
+                ", userName='" + userName + '\'' +
                 '}';
     }
 }

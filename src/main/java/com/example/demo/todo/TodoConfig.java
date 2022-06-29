@@ -17,9 +17,9 @@ public class TodoConfig {
     @Bean
     CommandLineRunner commandLineRunner(TodoRepository repository) {
         return args -> {
-            Todo sleep = new Todo("sleep", new Date(2022, 7, 1), "high", 1L
+            Todo sleep = new Todo("sleep", new Date(2022, 7, 1), "high", 1L, "Maria"
             );
-            Todo learn = new Todo("learn", new Date(2022, 8, 1), "high", 1L
+            Todo learn = new Todo("learn", new Date(2022, 8, 1), "high", 2L, "Alex"
             );
 
             repository.saveAll(

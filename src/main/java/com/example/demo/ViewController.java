@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.todo.Todo;
 import com.example.demo.todo.TodoRepository;
 import com.example.demo.todo.TodoService;
+import com.example.demo.users.UserRepository;
 import com.example.demo.users.UserService;
 import com.example.demo.users.Users;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.util.Collections;
 @Controller
 public class ViewController {
     TodoRepository todoRepository;
+
+    UserRepository userRepository;
 
     @Autowired
     TodoService todoService;
@@ -33,11 +36,16 @@ public class ViewController {
 
     @PostMapping("/todos")
     public String createTodo(@ModelAttribute Todo todo, Users user, Model model) {
-        Iterable<Todo> allTodoList = todoService.addNewTodo(todo);
+        Iterable<Todo> todoList = todoService.addNewTodo(todo);
         Todo emptyTodo = new Todo();
-        model.addAttribute("todolist", allTodoList);
+        model.addAttribute("todolist", todoList);
         model.addAttribute("todoObject", emptyTodo);
-        return "redirect:/todos";
+        System.out.println(todo.getUserName());
+        Iterable<Users> theUser = userService.getUserByName(todo.getUserName());
+        Users emptyUser = new Users();
+        model.addAttribute("userlist", theUser);
+        model.addAttribute("usersObject", emptyUser);
+        return "list";
     }
     @ResponseBody
     @DeleteMapping("/todos/{todoId}")
@@ -47,6 +55,10 @@ public class ViewController {
         Todo emptyTodo = new Todo();
         model.addAttribute("todolist", allTodoList);
         model.addAttribute("todoObject", emptyTodo);
+        Iterable<Users> theUser = userService.getUserByName(todo.getUserName());
+        Users emptyUser = new Users();
+        model.addAttribute("userlist", theUser);
+        model.addAttribute("usersObject", emptyUser);
         return "list";
     }
 
@@ -56,7 +68,11 @@ public class ViewController {
         System.out.println(todo);
         Iterable<Todo> allTodoList = todoService.updateTodo(todoId,"done");
         model.addAttribute("todolist", allTodoList);
-        return "list";
+        Iterable<Users> theUser = userService.getUserByName(todo.getUserName());
+        Users emptyUser = new Users();
+        model.addAttribute("userlist", theUser);
+        model.addAttribute("usersObject", emptyUser);
+        return "redirect:/userTodo";
     }
     @GetMapping("/users")
     public String usersPage(Model model) {
@@ -69,11 +85,11 @@ public class ViewController {
 
     @PostMapping("/users")
     public String createUsers(@ModelAttribute Users users, Model model) {
-        Iterable<Todo> todoList = todoService.getTodos();
+        Iterable<Users> theUser = userService.addNewUser(users);
+        Iterable<Todo> todoList = todoService.getTodosByUser(users.getId());
         model.addAttribute("todolist", todoList);
         Todo todo = new Todo();
         model.addAttribute("todoObject", todo);
-        Iterable<Users> theUser = userService.addNewUser(users);
         Users emptyUser = new Users();
         model.addAttribute("userlist", theUser);
         model.addAttribute("usersObject", emptyUser);
@@ -88,5 +104,22 @@ public class ViewController {
         Users users = new Users();
         model.addAttribute("usersObject", users);
         return "redirect:/users";
+    }
+
+    @RequestMapping ("/userTodo")
+    public String getUserTodo(Users user, Model model) {
+        System.out.println(user);
+        System.out.println(user.getName());
+        Iterable<Users> theUser = userService.getUserByName(user.getName());
+        System.out.println(theUser);
+        Users emptyUser = new Users();
+        model.addAttribute("userlist", theUser);
+        model.addAttribute("usersObject", emptyUser);
+        Iterable<Todo> todoList = todoService.getTodosByUserName(user.getName());
+        System.out.println(todoList);
+        model.addAttribute("todolist", todoList);
+        Todo todo = new Todo();
+        model.addAttribute("todoObject", todo);
+        return "list";
     }
 }

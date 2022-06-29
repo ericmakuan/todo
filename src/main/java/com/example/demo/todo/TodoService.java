@@ -27,14 +27,25 @@ public class TodoService {
         return todoRepository.findAllById(Collections.singleton(todoId));
     }
 
+    public List<Todo> getTodosByUser (Long userId) {
+
+        return todoRepository.findTodoBYUser(userId);
+    }
+
+    public List<Todo> getTodosByUserName (String userName) {
+
+        return todoRepository.findTodoByUserName(userName);
+    }
+
     public List<Todo> addNewTodo(Todo todo) {
         Optional<Todo> todoOptional = todoRepository.findTodoBYName(todo.getName());
         if (todoOptional.isPresent()) {
-            throw new IllegalStateException("name taken");
+            return todoRepository.findTodoByUserName(todo.getUserName());
         }
         todo.setDone("undone");
         todoRepository.save(todo);
-        return getTodos();
+        return todoRepository.findTodoByUserName(todo.getUserName());
+
     }
 
     public List<Todo> deleteTodo(Long todoId) {
@@ -53,8 +64,6 @@ public class TodoService {
                 .orElseThrow(() -> new IllegalStateException("Todo with id " + todoId + "does not exists")
                 );
         todo.setDone(done);
-        return getTodos();
-
-
+        return todoRepository.findTodoByUserName(todo.getUserName());
     }
 }

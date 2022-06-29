@@ -8,24 +8,33 @@
 </head>
 <body>
 <div class="container">
+  <h2 th:if="${userlist}==null">
+    <a href="/users"> no user </a>
+  </h2>
   <h2 th:each="user: ${userlist}">
 <!--    <h2 th:if="${user} != null">-->
-    <span th:text="${user.name}"></span>
+    <span th:text="${user.name}"></span><span th:text="'  userId:' + ${user.id}"></span>
+    <form class="header" th:action="@{/todos}" method="post" th:object="${todoObject}">
+      <input type="text" id="input" placeholder="Todo" th:field="*{name}">
+      <input type="text" id="input" placeholder="Priorrity" th:field="*{priority}">
+<!--      <input type="text" th:text="${user.name}" th:field="*{userName}">-->
+      <input type="text" id="input" name="userName" th:value="${user.name}" />
+      <button type="submit" class="addBtn">Add</button>
+    </form>
   </h2>
-  <form class="header" th:action="@{/todos}" method="post" th:object="${todoObject}">
-    <input type="text" id="input" placeholder="Todo" th:field="*{name}">
-    <input type="text" id="input" placeholder="Priorrity" th:field="*{priority}">
-    <input type="text" id="input" placeholder= "user" th:field="*{user}">
-    <button type="submit" class="addBtn">Add</button>
-  </form>
-  <h2>To Do List</h2>
+  <h2 th:if="${userlist}!=null">
+    <a href="/todos"> log out </a>
+  </h2>
+
+  <h2 th:if="${userlist}!=null">
   <ul th:each="todo: ${todolist}">
     <li th:onclick="'javascript:updateTodo(event,this,' + ${todo.id} + ')'">
       <span th:text="${todo.name}+','"></span> <span th:text="'  priority:' + ${todo.priority}"></span>
-      <span th:text="'  status:' + ${todo.done}"></span><span th:text="'  userId:' + ${todo.user}"></span>
+      <span th:text="'  status:' + ${todo.done}"></span><span th:text="'  user:' + ${todo.userName}"></span>
       <span class="close" th:onclick="'javascript:deleteTodo(event,this,' + ${todo.id} + ')'">x</span>
     </li>
   </ul>
+  </h2>
 </div>
 <script>
   const updateTodo = (event, element, id) => {

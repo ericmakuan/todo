@@ -27,6 +27,10 @@ public class UserService {
         return userRepository.findAllById(Collections.singleton(userId));
     }
 
+    public List<Users> getUserByName (String userName) {
+        return userRepository.findUserBYname(userName);
+    }
+
     public List<Users> addNewUser(Users users) {
         Optional<Users> userOptional = userRepository.findUserBYEmail(users.getEmail());
         if (userOptional.isPresent()) {
