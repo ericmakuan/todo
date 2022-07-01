@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" th:href="@{/style.css}">
@@ -35,6 +36,16 @@
     </li>
   </ul>
   </h2>
+  <footer>
+    <!-- this is footer -->
+    <span sec:authorize="isAuthenticated()">
+                | Logged user: <span sec:authentication="name"></span> |
+                Roles: <span sec:authentication="principal.authorities"></span> |
+                <a th:href="@{/todos}">Sign Out</a>
+            </span>
+    <script type="text/javascript"
+            src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </footer>
 </div>
 <script>
   const updateTodo = (event, element, id) => {
