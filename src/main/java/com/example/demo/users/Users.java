@@ -1,6 +1,7 @@
 package com.example.demo.users;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 
 @Entity
@@ -18,6 +19,7 @@ public class Users {
     )
     private Long id;
     private String name;
+    @Email
     private String email;
     private Long todoId;
 

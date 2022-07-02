@@ -1,5 +1,5 @@
 body {
-    background-image: linear-gradient(to top, #9DC7B7, #ffff00);
+    background-color: #C7AB7B;
 }
 
 .container {
@@ -40,7 +40,7 @@ h2 {
 }
 
 ul li.checked {
-    background: #6ACC8B;
+    background: #9DC7B7;
     color: #fff;
     text-decoration: line-through;
     border: 0.5px solid black;

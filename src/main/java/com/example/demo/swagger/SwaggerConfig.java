@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.swagger;
 
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +29,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo());
     }
 
-    public ApiInfo apiInfo(){
+    public ApiInfo apiInfo() {
         /*作者信息*/
         //        Contact contact = new Contact("XXX", "http://baidu.com", "email");
         Contact contact = new Contact("", "", "");

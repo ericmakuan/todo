@@ -1,9 +1,7 @@
-package com.example.demo;
+package com.example.demo.views;
 
 import com.example.demo.todo.Todo;
-import com.example.demo.todo.TodoRepository;
 import com.example.demo.todo.TodoService;
-import com.example.demo.users.UserRepository;
 import com.example.demo.users.UserService;
 import com.example.demo.users.Users;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-
 @Controller
 public class ViewController {
-    TodoRepository todoRepository;
-
-    UserRepository userRepository;
 
     @Autowired
     TodoService todoService;
@@ -47,10 +40,10 @@ public class ViewController {
         model.addAttribute("usersObject", emptyUser);
         return "list";
     }
+
     @ResponseBody
     @DeleteMapping("/todos/{todoId}")
     public String deleteTodo(@ModelAttribute Todo todo, Model model, @PathVariable("todoId") Long todoId) {
-        System.out.println(todo);
         Iterable<Todo> allTodoList = todoService.deleteTodo(todoId);
         Todo emptyTodo = new Todo();
         model.addAttribute("todolist", allTodoList);
@@ -63,10 +56,9 @@ public class ViewController {
     }
 
     @ResponseBody
-    @PutMapping ("/todos/{todoId}")
+    @PutMapping("/todos/{todoId}")
     public String putTodo(@ModelAttribute Todo todo, Model model, @PathVariable("todoId") Long todoId) {
-        System.out.println(todo);
-        Iterable<Todo> allTodoList = todoService.updateTodo(todoId,"done");
+        Iterable<Todo> allTodoList = todoService.updateTodo(todoId, "done");
         model.addAttribute("todolist", allTodoList);
         Iterable<Users> theUser = userService.getUserByName(todo.getUserName());
         Users emptyUser = new Users();
@@ -74,6 +66,7 @@ public class ViewController {
         model.addAttribute("usersObject", emptyUser);
         return "redirect:/userTodo";
     }
+
     @GetMapping("/users")
     public String usersPage(Model model) {
         Iterable<Users> userList = userService.getUsers();
@@ -106,17 +99,13 @@ public class ViewController {
         return "redirect:/users";
     }
 
-    @RequestMapping ("/userTodo")
+    @RequestMapping("/userTodo")
     public String getUserTodo(Users user, Model model) {
-        System.out.println(user);
-        System.out.println(user.getName());
         Iterable<Users> theUser = userService.getUserByName(user.getName());
-        System.out.println(theUser);
         Users emptyUser = new Users();
         model.addAttribute("userlist", theUser);
         model.addAttribute("usersObject", emptyUser);
         Iterable<Todo> todoList = todoService.getTodosByUserName(user.getName());
-        System.out.println(todoList);
         model.addAttribute("todolist", todoList);
         Todo todo = new Todo();
         model.addAttribute("todoObject", todo);
