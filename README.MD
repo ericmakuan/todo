@@ -31,7 +31,7 @@ http://35.79.130.208:8080/todos
 
 登入後可添加備忘錄及其重要度，輸入要做的事及優先度後按下Add。
 
-![](C:\Users\MA\Desktop\111.PNG)
+![image](https://github.com/ericmakuan/todo/blob/main/111.PNG)
 
 點擊該備忘錄可標記為已完成，而點擊x按鈕則可將其刪除。
 
@@ -39,6 +39,9 @@ http://35.79.130.208:8080/todos
 
 todo及user兩個package分別處理兩個備忘錄及使用者之動作，views負責連結前後端資料。  
 另有建一swagger來測試api。
+
+測試帳號名稱:Kuan Lun
+
 
 
 
