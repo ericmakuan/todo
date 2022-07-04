@@ -27,7 +27,7 @@ http://35.79.130.208:8080/todos
 
 ## 功能
 
-![](C:\Users\MA\Desktop\11.PNG)
+![image]([C:\Users\MA\Desktop\11.PNG](https://github.com/ericmakuan/todo/blob/main/11.PNG))
 
 登入後可添加備忘錄及其重要度，輸入要做的事及優先度後按下Add。
 
