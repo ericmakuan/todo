@@ -19,7 +19,7 @@
             <input type="text" id="input" placeholder="Todo" th:field="*{name}">
             <input type="text" id="input" placeholder="Priorrity" th:field="*{priority}">
             <!--      <input type="text" th:text="${user.name}" th:field="*{userName}">-->
-            <input type="text" id="input" name="userName" th:value="${user.name}"/>
+            <input type="hidden" id="input" name="userName" th:value="${user.name}"/>
             <button type="submit" class="addBtn">Add</button>
         </form>
     </h2>
