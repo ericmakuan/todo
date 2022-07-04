@@ -1,75 +1,75 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+>
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" th:href="@{/style.css}">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <title>Todo List</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Todo List</title>
 </head>
 <body>
 <div class="container">
-  <h2 th:if="${userlist}==null">
-    <a href="/users"> no user </a>
-  </h2>
-  <h2 th:each="user: ${userlist}">
-<!--    <h2 th:if="${user} != null">-->
-    <span th:text="${user.name}"></span><span th:text="'  userId:' + ${user.id}"></span>
-    <form class="header" th:action="@{/todos}" method="post" th:object="${todoObject}">
-      <input type="text" id="input" placeholder="Todo" th:field="*{name}">
-      <input type="text" id="input" placeholder="Priorrity" th:field="*{priority}">
-<!--      <input type="text" th:text="${user.name}" th:field="*{userName}">-->
-      <input type="text" id="input" name="userName" th:value="${user.name}" />
-      <button type="submit" class="addBtn">Add</button>
-    </form>
-  </h2>
-  <h2 th:if="${userlist}!=null">
-    <a href="/todos"> log out </a>
-  </h2>
+    <h2 th:if="${userlist}==null">
+        <a href="/users"> no user </a>
+    </h2>
+    <h2 th:each="user: ${userlist}">
+        <!--    <h2 th:if="${user} != null">-->
+        <span th:text="${user.name}"></span><span th:text="'  userId:' + ${user.id}"></span>
+        <form class="header" th:action="@{/todos}" method="post" th:object="${todoObject}">
+            <input type="text" id="input" placeholder="Todo" th:field="*{name}">
+            <input type="text" id="input" placeholder="Priorrity" th:field="*{priority}">
+            <!--      <input type="text" th:text="${user.name}" th:field="*{userName}">-->
+            <input type="text" id="input" name="userName" th:value="${user.name}"/>
+            <button type="submit" class="addBtn">Add</button>
+        </form>
+    </h2>
+    <h2 th:if="${userlist}!=null">
+        <a href="/todos"> log out </a>
+    </h2>
 
-  <h2 th:if="${userlist}!=null">
-  <ul th:each="todo: ${todolist}">
-    <li th:onclick="'javascript:updateTodo(event,this,' + ${todo.id} + ')'">
-      <span th:text="${todo.name}+','"></span> <span th:text="'  priority:' + ${todo.priority}"></span>
-      <span th:text="'  status:' + ${todo.done}"></span><span th:text="'  user:' + ${todo.userName}"></span>
-      <span class="close" th:onclick="'javascript:deleteTodo(event,this,' + ${todo.id} + ')'">x</span>
-    </li>
-  </ul>
-  </h2>
-  <footer>
-    <!-- this is footer -->
-    <span sec:authorize="isAuthenticated()">
-                | Logged user: <span sec:authentication="name"></span> |
-                Roles: <span sec:authentication="principal.authorities"></span> |
-                <a th:href="@{/todos}">Sign Out</a>
-            </span>
-    <script type="text/javascript"
-            src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  </footer>
+    <h2 th:if="${userlist}!=null">
+        <ul th:each="todo: ${todolist}">
+            <li th:onclick="'javascript:updateTodo(event,this,' + ${todo.id} + ')'">
+                <span th:text="${todo.name}+','"></span> <span th:text="'  priority:' + ${todo.priority}"></span>
+                <span th:text="'  status:' + ${todo.done}"></span><span th:text="'  user:' + ${todo.userName}"></span>
+                <span class="close" th:onclick="'javascript:deleteTodo(event,this,' + ${todo.id} + ')'">x</span>
+            </li>
+        </ul>
+    </h2>
+
+    <!--        <h2 th:if="${userlist}!=null">-->
+    <!--            <li><a href="#">Previous</a></li>-->
+    <!--            <li>    <form class="header" th:action="@{/userTodo?page=1}" method="post" th:object="${usersObject}">-->
+    <!--                <input type="text" id="input" name="userName" th:value="${user.name}">-->
+    <!--                <button type="submit" class="addBtn">Log in</button>-->
+    <!--            </form>Next</a></li>-->
+    <!--        </h2>-->
 </div>
 <script>
-  const updateTodo = (event, element, id) => {
-    event.stopPropagation();
-    fetch('todos/'+ id, {
-      method: 'put',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(function(response) {
-    })
-    location.reload();
-  }
-  const deleteTodo = (event, element, id) => {
-    event.stopPropagation();
-    fetch('todos/'+ id, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(function(response) {
-      element.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode);
-    })
-  }
+    const updateTodo = (event, element, id) => {
+        console.log(id)
+        event.stopPropagation();
+        fetch('todos/' + id, {
+            method: 'put',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+        })
+        location.reload();
+    }
+    const deleteTodo = (event, element, id) => {
+        console.log(id);
+        event.stopPropagation();
+        fetch('todos/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            element.parentNode.parentNode.parentNode.removeChild(element.parentNode.parentNode);
+        })
+    }
 </script>
 </body>
 </html>

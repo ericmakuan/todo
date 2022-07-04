@@ -33,7 +33,6 @@ public class ViewController {
         Todo emptyTodo = new Todo();
         model.addAttribute("todolist", todoList);
         model.addAttribute("todoObject", emptyTodo);
-        System.out.println(todo.getUserName());
         Iterable<Users> theUser = userService.getUserByName(todo.getUserName());
         Users emptyUser = new Users();
         model.addAttribute("userlist", theUser);
@@ -44,7 +43,9 @@ public class ViewController {
     @ResponseBody
     @DeleteMapping("/todos/{todoId}")
     public String deleteTodo(@ModelAttribute Todo todo, Model model, @PathVariable("todoId") Long todoId) {
+        System.out.println(todoId);
         Iterable<Todo> allTodoList = todoService.deleteTodo(todoId);
+        System.out.println(allTodoList);
         Todo emptyTodo = new Todo();
         model.addAttribute("todolist", allTodoList);
         model.addAttribute("todoObject", emptyTodo);
@@ -99,13 +100,15 @@ public class ViewController {
         return "redirect:/users";
     }
 
-    @RequestMapping("/userTodo")
-    public String getUserTodo(Users user, Model model) {
+
+    @RequestMapping(value = "/userTodo")
+    public String getUserTodo(@RequestParam(defaultValue = "0") Integer page,
+                              @RequestParam(defaultValue = "5") Integer size, Users user, Model model) {
         Iterable<Users> theUser = userService.getUserByName(user.getName());
         Users emptyUser = new Users();
         model.addAttribute("userlist", theUser);
         model.addAttribute("usersObject", emptyUser);
-        Iterable<Todo> todoList = todoService.getTodosByUserName(user.getName());
+        Iterable<Todo> todoList = todoService.getTodosByUserName(user.getName(), page, size);
         model.addAttribute("todolist", todoList);
         Todo todo = new Todo();
         model.addAttribute("todoObject", todo);

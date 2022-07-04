@@ -1,40 +1,48 @@
 package com.example.demo.todo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class TodoService {
     private final TodoRepository todoRepository;
+
+
+    Pageable firstPageWithFiveElements = PageRequest.of(1, 5);
 
     @Autowired
     public TodoService(TodoRepository todoRepository) {
         this.todoRepository = todoRepository;
     }
 
-    public List<Todo> getTodos () {
+    public List<Todo> getTodos() {
         return todoRepository.findAll();
     }
-    public List<Todo> getTodo (Long todoId) {
+
+    public List<Todo> getTodo(Long todoId) {
 
         return todoRepository.findAllById(Collections.singleton(todoId));
     }
 
-    public List<Todo> getTodosByUser (Long userId) {
+    public List<Todo> getTodosByUser(Long userId) {
 
         return todoRepository.findTodoBYUser(userId);
     }
 
-    public List<Todo> getTodosByUserName (String userName) {
-
-        return todoRepository.findTodoByUserName(userName);
+    public List<Todo> getTodosByUserName(String userName, int page, int size) {
+//        return todoRepository.findTodoByUserName(userName);
+        System.out.println(todoRepository.findTodoByUserName(userName, PageRequest.of(page, size)));
+        Page<Todo> result = todoRepository.findTodoByUserName(userName, PageRequest.of(page, size));
+        System.out.println(result);
+        return result.getContent();
     }
 
     public List<Todo> addNewTodo(Todo todo) {
