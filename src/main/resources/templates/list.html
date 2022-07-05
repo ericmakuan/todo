@@ -28,7 +28,7 @@
     </h2>
 
     <h2 th:if="${userlist}!=null">
-        <ul th:each="todo: ${todolist}">
+        <ul th:each="todo, iStat : ${todolist.content}">
             <li th:onclick="'javascript:updateTodo(event,this,' + ${todo.id} + ')'">
                 <span th:text="${todo.name}+','"></span> <span th:text="'  priority:' + ${todo.priority}"></span>
                 <span th:text="'  status:' + ${todo.done}"></span><span th:text="'  user:' + ${todo.userName}"></span>
@@ -44,6 +44,29 @@
     <!--                <button type="submit" class="addBtn">Log in</button>-->
     <!--            </form>Next</a></li>-->
     <!--        </h2>-->
+    <div th:if="${todolist.totalPages > 0} and ${userlist}!=null" class="pagination"
+         th:each="pageNum : ${pageNums}">
+        <a th:each="user: ${userlist}">
+            <!--        <a th:href="@{/userTodo(page=${pageNums}, size=${todolist.size})}"-->
+            <!--           th:text=${pageNum}-->
+            <!--           th:class="${pageNum==todolist.number + 1} ? active"></a>-->
+            <form class="addBtn" th:action="@{/userTodo(page=0, size=${todolist.size})}" method="post"
+                  th:object="${usersObject}">
+                <input type="hidden" id="input" name="name" th:value="${user.name}">
+                <button type="submit" class="addBtn">1</button>
+            </form>
+        </a>
+        <a th:each="user: ${userlist}">
+            <!--        <a th:href="@{/userTodo(page=${pageNums}, size=${todolist.size})}"-->
+            <!--           th:text=${pageNum}-->
+            <!--           th:class="${pageNum==todolist.number + 1} ? active"></a>-->
+            <form class="addBtn" th:action="@{/userTodo(page=1, size=${todolist.size})}" method="post"
+                  th:object="${usersObject}">
+                <input type="hidden" id="input" name="name" th:value="${user.name}">
+                <button type="submit" class="addBtn">2</button>
+            </form>
+        </a>
+    </div>
 </div>
 <script>
     const updateTodo = (event, element, id) => {

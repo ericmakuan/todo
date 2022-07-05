@@ -5,6 +5,7 @@ import com.example.demo.todo.TodoService;
 import com.example.demo.users.UserService;
 import com.example.demo.users.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -108,7 +109,9 @@ public class ViewController {
         Users emptyUser = new Users();
         model.addAttribute("userlist", theUser);
         model.addAttribute("usersObject", emptyUser);
-        Iterable<Todo> todoList = todoService.getTodosByUserName(user.getName(), page, size);
+        Page<Todo> todoList = todoService.getTodosByUserName(user.getName(), page, size);
+        int pageNums = todoList.getTotalPages();
+        model.addAttribute("pageNums", pageNums);
         model.addAttribute("todolist", todoList);
         Todo todo = new Todo();
         model.addAttribute("todoObject", todo);

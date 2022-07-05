@@ -37,12 +37,11 @@ public class TodoService {
         return todoRepository.findTodoBYUser(userId);
     }
 
-    public List<Todo> getTodosByUserName(String userName, int page, int size) {
+    public Page<Todo> getTodosByUserName(String userName, int page, int size) {
 //        return todoRepository.findTodoByUserName(userName);
         System.out.println(todoRepository.findTodoByUserName(userName, PageRequest.of(page, size)));
         Page<Todo> result = todoRepository.findTodoByUserName(userName, PageRequest.of(page, size));
-        System.out.println(result);
-        return result.getContent();
+        return result;
     }
 
     public List<Todo> addNewTodo(Todo todo) {
