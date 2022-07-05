@@ -24,7 +24,7 @@
         </form>
     </h2>
     <h2 th:if="${userlist}!=null">
-        <a href="/todos"> log out </a>
+        <a href="/"> log out </a>
     </h2>
 
     <h2 th:if="${userlist}!=null">
@@ -56,7 +56,7 @@
                 <button type="submit" class="addBtn">1</button>
             </form>
         </a>
-        <a th:each="user: ${userlist}">
+        <a th:if="${pageNums}>1" th:each="user: ${userlist}">
             <!--        <a th:href="@{/userTodo(page=${pageNums}, size=${todolist.size})}"-->
             <!--           th:text=${pageNum}-->
             <!--           th:class="${pageNum==todolist.number + 1} ? active"></a>-->

@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" th:href="@{/style.css}">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <title>sign up</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>sign up</title>
 </head>
+
 <body>
 <div class="container">
-  <h2>user</h2>
-  <ul th:each="user: ${userlist}">
-    <li th:onclick="'javascript:updateUser(event,this,' + ${user.id} + ')'">
-      <span th:text="'  name:' + ${user.name}+','"></span> <span th:text="'  email:' + ${user.email}"></span>
-      <span class="close" th:onclick="'javascript:deleteUser(event,this,' + ${user.id} + ')'">x</span>
-    </li>
-  </ul>
+    <h2>user</h2>
+    <ul th:each="user: ${userlist}">
+        <li th:onclick="'javascript:updateUser(event,this,' + ${user.id} + ')'">
+            <span th:text="'  name:' + ${user.name}+','"></span> <span th:text="'  email:' + ${user.email}"></span>
+            <span class="close" th:onclick="'javascript:deleteUser(event,this,' + ${user.id} + ')'">x</span>
+        </li>
+    </ul>
 </div>
 <script>
-  const deleteUser = (event, element, id) => {
-    event.stopPropagation();
-    fetch('users/'+ id, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(function(response) {
-      window.location.assign("http://localhost:8080/users");
-    })
+    const deleteUser = (event, element, id) => {
+        event.stopPropagation();
+        fetch('users/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(function (response) {
+            window.location.assign("http://localhost:8080/users");
+        })
 
-  }
+    }
 </script>
 </body>
 </html>

@@ -19,6 +19,13 @@ public class ViewController {
     @Autowired
     UserService userService;
 
+    @GetMapping("/")
+    public String frontPage(Model model) {
+        Users user = new Users();
+        model.addAttribute("usersObject", user);
+        return "userSign";
+    }
+
     @GetMapping("/todos")
     public String getTodos(Model model) {
         Iterable<Todo> todoList = todoService.getTodos();
