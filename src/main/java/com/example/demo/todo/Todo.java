@@ -1,9 +1,6 @@
 package com.example.demo.todo;
 
 
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -25,7 +22,7 @@ public class Todo {
     private String name;
     private String done;
     private Date deadLine;
-    private String priority;
+    private Priority priority;
     private Long userId;
 
     private String userName;
@@ -43,7 +40,7 @@ public class Todo {
 //        this.userId = userId;
 //    }
 
-    public Todo(String name, Date deadLine, String priority, Long userId, String userName) {
+    public Todo(String name, Date deadLine, Priority priority, Long userId, String userName) {
 
         this.name = name;
         this.done = "undone";
@@ -99,11 +96,11 @@ public class Todo {
         this.deadLine = deadLine;
     }
 
-    public String getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 
@@ -127,4 +124,5 @@ public class Todo {
                 ", userName='" + userName + '\'' +
                 '}';
     }
+
 }

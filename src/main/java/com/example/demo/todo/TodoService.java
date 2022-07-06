@@ -38,21 +38,29 @@ public class TodoService {
     }
 
     public Page<Todo> getTodosByUserName(String userName, int page, int size) {
-//        return todoRepository.findTodoByUserName(userName);
-        System.out.println(todoRepository.findTodoByUserName(userName, PageRequest.of(page, size)));
         Page<Todo> result = todoRepository.findTodoByUserName(userName, PageRequest.of(page, size));
         return result;
     }
 
-    public List<Todo> addNewTodo(Todo todo) {
+    public Page<Todo> addNewTodo(Todo todo, int page, int size) {
         Optional<Todo> todoOptional = todoRepository.findTodoBYName(todo.getName());
         if (todoOptional.isPresent()) {
-            return todoRepository.findTodoByUserName(todo.getUserName());
+            Page<Todo> result = todoRepository.findTodoByUserName(todo.getUserName(), PageRequest.of(page, size));
+            return result;
+        }
+        todo.setDone("undone");
+        todoRepository.save(todo);
+        Page<Todo> result = todoRepository.findTodoByUserName(todo.getUserName(), PageRequest.of(page, size));
+        return result;
+    }
+
+    public List<Todo> addNewTodoC(Todo todo) {
+        Optional<Todo> todoOptional = todoRepository.findTodoBYName(todo.getName());
+        if (todoOptional.isPresent()) {
         }
         todo.setDone("undone");
         todoRepository.save(todo);
         return todoRepository.findTodoByUserName(todo.getUserName());
-
     }
 
     public List<Todo> deleteTodo(Long todoId) {

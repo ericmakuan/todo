@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -29,14 +28,13 @@ public class TodoController {
     }
 
     @GetMapping
-    public List<Todo> getTodos () {
+    public List<Todo> getTodos() {
         return todoService.getTodos();
     }
 
 
-
     @GetMapping(path = "{todoId}")
-    public List<Todo> getTodo (@PathVariable("todoId") Long todoId) {
+    public List<Todo> getTodo(@PathVariable("todoId") Long todoId) {
         return todoService.getTodo(todoId);
     }
 
@@ -44,7 +42,7 @@ public class TodoController {
     @PostMapping
     public void generateNewTodo(@RequestBody Todo todo) {
 
-        todoService.addNewTodo(todo);
+        todoService.addNewTodoC(todo);
     }
 
     @DeleteMapping(path = "{todoId}")
@@ -55,7 +53,7 @@ public class TodoController {
 
     @PutMapping(path = "{todoId}")
     public void updateTodo(@PathVariable("todoId") Long todoId,
-                                @RequestParam(required = false) String done){
+                           @RequestParam(required = false) String done) {
         todoService.updateTodo(todoId, done);
     }
 }

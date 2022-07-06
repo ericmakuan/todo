@@ -36,8 +36,12 @@ public class ViewController {
     }
 
     @PostMapping("/todos")
-    public String createTodo(@ModelAttribute Todo todo, Users user, Model model) {
-        Iterable<Todo> todoList = todoService.addNewTodo(todo);
+    public String createTodo(@RequestParam(defaultValue = "0") Integer page,
+                             @RequestParam(defaultValue = "5") Integer size,
+                             @ModelAttribute Todo todo, Users user, Model model) {
+        Page<Todo> todoList = todoService.addNewTodo(todo, page, size);
+        int pageNums = todoList.getTotalPages();
+        model.addAttribute("pageNums", pageNums);
         Todo emptyTodo = new Todo();
         model.addAttribute("todolist", todoList);
         model.addAttribute("todoObject", emptyTodo);

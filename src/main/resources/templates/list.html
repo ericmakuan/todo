@@ -17,8 +17,11 @@
         <span th:text="${user.name}"></span><span th:text="'  userId:' + ${user.id}"></span>
         <form class="header" th:action="@{/todos}" method="post" th:object="${todoObject}">
             <input type="text" id="input" placeholder="Todo" th:field="*{name}">
-            <input type="text" id="input" placeholder="Priorrity" th:field="*{priority}">
-            <!--      <input type="text" th:text="${user.name}" th:field="*{userName}">-->
+            <!--            <input type="text" id="input" placeholder="Priority" th:field="*{priority}">-->
+            <select name="priority">
+                <option th:each="priorityOpt : ${T(com.example.demo.todo.Priority).values()}"
+                        th:value="${priorityOpt}" th:text="${priorityOpt.displayValue}"></option>
+            </select>
             <input type="hidden" id="input" name="userName" th:value="${user.name}"/>
             <button type="submit" class="addBtn">Add</button>
         </form>
@@ -30,7 +33,8 @@
     <h2 th:if="${userlist}!=null">
         <ul th:each="todo, iStat : ${todolist.content}">
             <li th:onclick="'javascript:updateTodo(event,this,' + ${todo.id} + ')'">
-                <span th:text="${todo.name}+','"></span> <span th:text="'  priority:' + ${todo.priority}"></span>
+                <span th:text="${todo.name}+','"></span> <span
+                    th:text="'  priority:' + ${todo.priority.displayValue}"></span>
                 <span th:text="'  status:' + ${todo.done}"></span><span th:text="'  user:' + ${todo.userName}"></span>
                 <span class="close" th:onclick="'javascript:deleteTodo(event,this,' + ${todo.id} + ')'">x</span>
             </li>
