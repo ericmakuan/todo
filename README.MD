@@ -4,7 +4,8 @@ A JAVA program to create and manage a personal Todo list.
 
 ## Demo
 
-http://35.79.130.208:8080/todos
+http://35.79.130.208:8080
+http://35.79.130.208:8080/swagger-ui.html
 
 ## 備忘錄選項:
 
@@ -21,9 +22,11 @@ http://35.79.130.208:8080/todos
 
 ## 基本架構
 
-使用spring boot建構以PSql為資料庫之備忘錄API，傳入AWS服務之EC2機器。  
-將資料庫連結RDS並以Tmux開啟長時間啟動之網站。  
-使用thymeleaf來連接前後端。
+- 使用spring boot建構以PSql為資料庫之備忘錄API。
+- 上傳至AWS服務之EC2執行個體，作為伺服器。
+- 將database連結AWS服務之RDS資料庫。
+- 在EC2內啟用Tmux使網站能長時間運行。
+- 使用thymeleaf來連接前後端。
 
 ## 功能
 
