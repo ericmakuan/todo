@@ -90,9 +90,13 @@ public class ViewController {
     }
 
     @PostMapping("/users")
-    public String createUsers(@ModelAttribute Users users, Model model) {
+    public String createUsers(@RequestParam(defaultValue = "0") Integer page,
+                              @RequestParam(defaultValue = "5") Integer size,
+                              @ModelAttribute Users users, Model model) {
         Iterable<Users> theUser = userService.addNewUser(users);
-        Iterable<Todo> todoList = todoService.getTodosByUser(users.getId());
+        Page<Todo> todoList = todoService.getTodosByUserName(users.getName(), page, size);
+        int pageNums = todoList.getTotalPages();
+        model.addAttribute("pageNums", pageNums);
         model.addAttribute("todolist", todoList);
         Todo todo = new Todo();
         model.addAttribute("todoObject", todo);
