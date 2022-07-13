@@ -40,6 +40,11 @@
             </li>
         </ul>
     </h2>
+    <form enctype="multipart/form-data" method="post" action="/api/v1/files">
+        檔案上傳:<br/>
+        <input type="file" name="file"/>
+        <input class="addBtn" type="submit" value="上傳"/>
+    </form>
 
     <!--        <h2 th:if="${userlist}!=null">-->
     <!--            <li><a href="#">Previous</a></li>-->
