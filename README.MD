@@ -29,8 +29,6 @@ todo及user兩個package分別處理兩個備忘錄及使用者之動作，views
 以PostgreSQL建立todo及users兩table。  
 ![image](https://github.com/ericmakuan/todo/blob/main/ERD.png)  
 
-測試帳號名稱:Kuan Lun
-
 ## Demo
 ![image](https://github.com/ericmakuan/todo/blob/main/front.PNG)  
 上方輸入使用者名稱及電子信箱來創建帳號，下方輸入使用者名稱來登入。  
@@ -45,3 +43,4 @@ todo及user兩個package分別處理兩個備忘錄及使用者之動作，views
 
 另有建一swagger來測試api。  
 http://35.79.130.208:8080/swagger-ui.html  
+測試帳號名稱:Kuan Lun
