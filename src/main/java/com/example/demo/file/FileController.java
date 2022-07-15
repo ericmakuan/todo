@@ -33,7 +33,10 @@ public class FileController {
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestParam("file") MultipartFile multipartFile) {
-        fileService.save(multipartFile);
+        new Thread(() -> {
+            fileService.save(multipartFile);
+        }).start();
+
         return new ResponseEntity<>(MESSAGE_1, HttpStatus.OK);
     }
 }

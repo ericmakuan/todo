@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.time.LocalDateTime;
 
 @Service
 public class FileService {
@@ -38,7 +37,6 @@ public class FileService {
         return file;
     }
 
-    // @Async annotation ensures that the method is executed in a different thread
 
     @Async
     public S3ObjectInputStream findByName(String fileName) {
@@ -46,15 +44,15 @@ public class FileService {
         return amazonS3.getObject(s3BucketName, fileName).getObjectContent();
     }
 
-    @Async
+
     public void save(final MultipartFile multipartFile) {
         try {
             final File file = convertMultiPartFileToFile(multipartFile);
-            final String fileName = LocalDateTime.now() + "_" + file.getName();
+            final String fileName = file.getName();
             LOG.info("Uploading file with name {}", fileName);
             final PutObjectRequest putObjectRequest = new PutObjectRequest(s3BucketName, fileName, file);
             amazonS3.putObject(putObjectRequest);
-            Files.delete(file.toPath()); // Remove the file locally created in the project folder
+            Files.delete(file.toPath());
         } catch (AmazonServiceException e) {
             LOG.error("Error {} occurred while uploading file", e.getLocalizedMessage());
         } catch (IOException ex) {
